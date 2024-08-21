@@ -1,0 +1,11 @@
+streamlit
+pandas==2.2.2
+numpy==1.26.4
+pip==24.2
+matplotlib==3.9.0 
+scikit-learn
+joblib
+openpyxl==3.1.5
+scipy==1.14.0
+config
+psycopg2-binary
