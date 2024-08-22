@@ -19,14 +19,14 @@ def create_connection():
     connection = None
     try:
         connection = psycopg2.connect(
-            # host=config.POSTGRES_HOST,
-            # user=config.POSTGRES_USER,
-            # password=config.POSTGRES_PASSWORD,
-            # database=config.POSTGRES_DB
-            host=st.secrets["POSTGRES_HOST"],
-            user=st.secrets["POSTGRES_USER"],
-            password=st.secrets["POSTGRES_PASSWORD"],
-            database=st.secrets["POSTGRES_DB"]
+            host=config.POSTGRES_HOST,
+            user=config.POSTGRES_USER,
+            password=config.POSTGRES_PASSWORD,
+            database=config.POSTGRES_DB
+            # host=st.secrets["POSTGRES_HOST"],
+            # user=st.secrets["POSTGRES_USER"],
+            # password=st.secrets["POSTGRES_PASSWORD"],
+            # database=st.secrets["POSTGRES_DB"]
         )
         st.write("Koneksi ke PostgreSQL berhasil")
     except (Exception, psycopg2.Error) as error:
