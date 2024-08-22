@@ -7,6 +7,11 @@ from psycopg2 import Error
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 import config 
 
+st.write("POSTGRES_HOST:", config.POSTGRES_HOST)
+st.write("POSTGRES_USER:", config.POSTGRES_USER)
+st.write("POSTGRES_PASSWORD:", config.POSTGRES_PASSWORD)
+st.write("POSTGRES_DB:", config.POSTGRES_DB)
+
 # Load the pkl files
 scaler = joblib.load('scaler.pkl')
 le_status = joblib.load('le_status.pkl')
