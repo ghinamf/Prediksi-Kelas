@@ -15,5 +15,4 @@ LEVEL_KEAHLIAN.csv
 #Streamlit-specific files
 .streamlit/
 
-#MySQL privacy
-config.py
+
