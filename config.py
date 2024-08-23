@@ -31,11 +31,14 @@ import streamlit as st
 # POSTGRES_USER = secrets['connections']['postgresql']['postgres.buekaqirxfuezetbncod']
 # POSTGRES_PASSWORD = secrets['connections']['postgresql']['Gc9SGq2ZLUT9SsUD']
 
-POSTGRES_HOST = st.secrets['connections']['postgresql']['host']
-POSTGRES_PORT = st.secrets['connections']['postgresql']['port']
-POSTGRES_DB = st.secrets['connections']['postgresql']['database']
-POSTGRES_USER = st.secrets['connections']['postgresql']['username']
-POSTGRES_PASSWORD = st.secrets['connections']['postgresql']['password']
+# POSTGRES_HOST = st.secrets['connections']['postgresql']['host']
+# POSTGRES_PORT = st.secrets['connections']['postgresql']['port']
+# POSTGRES_DB = st.secrets['connections']['postgresql']['database']
+# POSTGRES_USER = st.secrets['connections']['postgresql']['username']
+# POSTGRES_PASSWORD = st.secrets['connections']['postgresql']['password']
+
+SUPABASE_URL = st.secrets['connections']['postgresql']['url']
+keSUPABASE_KEYy = st.secrets['connections']['postgresql']['key']
 
 # POSTGRES_HOST = "aws-0-ap-southeast-1.pooler.supabase.com"
 # POSTGRES_USER = "postgres.buekaqirxfuezetbncod"
