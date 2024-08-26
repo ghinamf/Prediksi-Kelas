@@ -465,8 +465,8 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from st_supabase_connection import SupabaseConnection
 
-st.write("Supabase URL:", st.secrets["supabase"]["SUPABASE_URL"])
-st.write("Supabase Key:", st.secrets["supabase"]["SUPABASE_KEY"])
+# st.write("Supabase URL:", st.secrets["supabase"]["SUPABASE_URL"])
+# st.write("Supabase Key:", st.secrets["supabase"]["SUPABASE_KEY"])
 
 # Inisialisasi Supabase Client
 st_supabase_client = st.connection(
@@ -491,8 +491,8 @@ feature_order = joblib.load('feature_order.pkl')
 st.title("Model Prediksi Level Keahlian")
 
 # Input form for new data
-durations_perproject = st.number_input('Kemampuan Waktu Pengerjaan Tiap Project [hour]')
 total_project = st.number_input('Kemampuan Menyelesaikan Project [jumlah]')
+durations_perproject = st.number_input('Kemampuan Waktu Pengerjaan Tiap Project [hour]')
 status = st.selectbox('Status Kerja', le_status.classes_)
 lama_kerja = st.number_input('Lama Kerja [year]')
 divisi = st.selectbox('Divisi Impian', ohe.categories_[0])
@@ -539,10 +539,20 @@ if st.button('Prediksi'):
     # Convert data_simpan to dictionary format
     data_to_save = data_simpan.to_dict(orient='records')[0]
     
+    # # Save to Supabase
+    # response = st_supabase_client.table("prediction_history").insert(data_to_save).execute()
+    # if response.status_code == 200:
+    #     st.success("Data berhasil disimpan!")
+    # else:
+    #     st.error(f"Error: {response.status_code}")
+    
     # Save to Supabase
     response = st_supabase_client.table("prediction_history").insert(data_to_save).execute()
-    if response.status_code == 200:
-        st.success("Data berhasil disimpan!")
+
+    # Check for error in the response
+    if response.data:
+     st.success("Data berhasil disimpan!")
     else:
-        st.error(f"Error: {response.status_code}")
+     st.error(f"Error: {response}")
+
 
