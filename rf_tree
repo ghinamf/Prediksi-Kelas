@@ -1,0 +1,17 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label=<LAMA_KERJA &le; 0.112<br/>gini = 0.707<br/>samples = 16<br/>value = [0, 1, 0, 1, 1, 6, 8, 0, 0, 14, 1]>, fillcolor="#f8ceeb"] ;
+1 [label=<GOL_B2-MI &le; 0.5<br/>gini = 0.644<br/>samples = 8<br/>value = [0, 0, 0, 1, 1, 6, 8, 0, 0, 1, 0]>, fillcolor="#dbe5fa"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<gini = 0.514<br/>samples = 6<br/>value = [0, 0, 0, 0, 1, 2, 8, 0, 0, 1, 0]>, fillcolor="#88a9ef"] ;
+1 -> 2 ;
+3 [label=<gini = 0.32<br/>samples = 2<br/>value = [0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0]>, fillcolor="#6adaec"] ;
+1 -> 3 ;
+4 [label=<DURATIONS_PERPROJECT &le; 1.892<br/>gini = 0.24<br/>samples = 8<br/>value = [0, 1, 0, 0, 0, 0, 0, 0, 0, 13, 1]>, fillcolor="#e955ba"] ;
+0 -> 4 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+5 [label=<gini = 0.0<br/>samples = 6<br/>value = [0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0]>, fillcolor="#e539ae"] ;
+4 -> 5 ;
+6 [label=<gini = 0.5<br/>samples = 2<br/>value = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]>, fillcolor="#ffffff"] ;
+4 -> 6 ;
+}
