@@ -465,6 +465,9 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from st_supabase_connection import SupabaseConnection
 
+st.write("Supabase URL:", st.secrets["supabase"]["SUPABASE_URL"])
+st.write("Supabase Key:", st.secrets["supabase"]["SUPABASE_KEY"])
+
 # Inisialisasi Supabase Client
 st_supabase_client = st.connection(
     name="supabase_connection",
