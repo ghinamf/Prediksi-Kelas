@@ -303,7 +303,6 @@ supabase = SupabaseConnection(
     key=st.secrets["supabase"]["SUPABASE_KEY"]
 )
 
-
 # Streamlit UI
 st.title("Model Prediksi Level Keahlian")
 
@@ -348,9 +347,21 @@ if st.button('Prediksi'):
     prediction = modela.predict(X_new)
     st.write(f'Hasil Prediksi: {prediction[0]}')
     
-    # Save prediction result with the input data to Supabase
-    data_simpan['Predicted_Keahlian'] = prediction[0]
-    data_simpan['Revisian'] = revisian
+    # # Save prediction result with the input data to Supabase
+    # data_simpan['Predicted_Keahlian'] = prediction[0]
+    # data_simpan['Revisian'] = revisian
+    
+    # Prepare the data for saving
+    data_simpan = {
+        "DURATIONS_PERPROJECT": durations_perproject,
+        "TOTAL_PROJECT": total_project,
+        "STATUS": status,
+        "lAMA KERJA": lama_kerja,
+        "DIVISI": divisi,
+        "GOL": gol,
+        "Predicted_LEVEL_KEAHLIAN": prediction[0],
+        "Revisian_LEVEL_KEAHLIAN": revisian
+    }
     
     # Insert the record into Supabase table (e.g., "prediction_history")
     try:
