@@ -337,8 +337,8 @@ if st.button('Prediksi'):
     data_simpan['Revisian_LEVEL_KEAHLIAN'] = revisian
     
     try:
-        insert_result = supabase.table("prediction_history").insert(data_simpan.to_dict(orient='records')).execute()
+        insert_result = supabase.table("pre_his").insert(data_simpan.to_dict(orient='records')).execute()
         st.success("Data has been saved to Supabase.")
-        # st.write("Insert Result:", insert_result)
+        st.write("Insert Result:", insert_result)
     except Exception as e:
         st.error(f"Error saving data to Supabase: {e}")
