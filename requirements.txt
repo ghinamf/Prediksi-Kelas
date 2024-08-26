@@ -10,4 +10,4 @@ scipy==1.14.0
 config
 psycopg2-binary
 supabase-py
-supabase
+st-supabase-connection==0.2.0

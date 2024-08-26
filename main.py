@@ -1,12 +1,12 @@
-# Libraries
-import streamlit as st
-import pandas as pd
-import joblib
-import psycopg2
-from psycopg2 import Error
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
-import config 
-from supabase import create_client, Client
+# # Libraries
+# import streamlit as st
+# import pandas as pd
+# import joblib
+# import psycopg2
+# from psycopg2 import Error
+# from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
+# import config 
+# from supabase import create_client, Client
 
 # # Load the pkl files
 # scaler = joblib.load('scaler.pkl')
