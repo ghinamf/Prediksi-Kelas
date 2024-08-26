@@ -291,10 +291,17 @@ feature_order = joblib.load('feature_order.pkl')
 #     st.secrets["supabase"]["SUPABASE_KEY"]
 # )
 
-# Initialize Supabase connection
-supabase = SupabaseConnection(connection_name="MySupabaseConnection")
-# Later in the code, when using the connection
-supabase.connect(st.secrets["supabase"]["SUPABASE_URL"], st.secrets["supabase"]["SUPABASE_KEY"])
+# # Initialize Supabase connection
+# supabase = SupabaseConnection(connection_name="MySupabaseConnection")
+# # Later in the code, when using the connection
+# supabase.connect(st.secrets["supabase"]["SUPABASE_URL"], st.secrets["supabase"]["SUPABASE_KEY"])
+
+# Initialize Supabase connection with the required parameters
+supabase = SupabaseConnection(
+    connection_name="MySupabaseConnection", 
+    url=st.secrets["supabase"]["SUPABASE_URL"], 
+    key=st.secrets["supabase"]["SUPABASE_KEY"]
+)
 
 
 # Streamlit UI
