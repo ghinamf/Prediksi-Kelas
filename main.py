@@ -357,8 +357,14 @@ ohe = joblib.load('ohe.pkl')
 modela = joblib.load('final_model.pkl')
 feature_order = joblib.load('feature_order.pkl')
 
-# Supabase connection using SupabaseConnection class
-supabase_connection = SupabaseConnection()
+# # Supabase connection using SupabaseConnection class
+# supabase_connection = SupabaseConnection()
+# Initialize Supabase connection
+supabase = SupabaseConnection(
+    connection_name="MySupabaseConnection", 
+    url=st.secrets["supabase"]["SUPABASE_URL"], 
+    key=st.secrets["supabase"]["SUPABASE_KEY"]
+)
 
 def insert_prediction(data):
     try:
@@ -374,7 +380,7 @@ def insert_prediction(data):
             "Revisian_LEVEL_KEAHLIAN": data[7]
         }
         # Insert ke tabel di Supabase
-        supabase_connection.insert(data_dict)
+        supabase.insert(data_dict)
         st.write("Data berhasil disimpan ke Supabase")
     except Exception as e:
         st.write(f"Error saat menyimpan data ke Supabase: {e}")
