@@ -344,10 +344,13 @@
 #         st.error(f"Error saving data to Supabase: {e}")
 
 
-
+# Libraries
 import streamlit as st
 import pandas as pd
 import joblib
+import psycopg2
+from psycopg2 import Error
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from st_supabase_connection import SupabaseConnection
 
 # Load the pkl files
@@ -357,9 +360,7 @@ ohe = joblib.load('ohe.pkl')
 modela = joblib.load('final_model.pkl')
 feature_order = joblib.load('feature_order.pkl')
 
-# # Supabase connection using SupabaseConnection class
-# supabase_connection = SupabaseConnection()
-# Initialize Supabase connection
+# Initialize Supabase connection using SupabaseConnection class
 supabase = SupabaseConnection(
     connection_name="MySupabaseConnection", 
     url=st.secrets["supabase"]["SUPABASE_URL"], 
@@ -368,7 +369,7 @@ supabase = SupabaseConnection(
 
 def insert_prediction(data):
     try:
-        # Format data sebagai dictionary
+        # Format data as a dictionary
         data_dict = {
             "DURATIONS_PERPROJECT": data[0],
             "TOTAL_PROJECT": data[1],
@@ -379,11 +380,11 @@ def insert_prediction(data):
             "Predicted_LEVEL_KEAHLIAN": data[6],
             "Revisian_LEVEL_KEAHLIAN": data[7]
         }
-        # Insert ke tabel di Supabase
-        supabase.insert(data_dict)
+        # Insert into the table in Supabase
+        supabase.client.table("prediction_history").insert(data_dict).execute()
         st.write("Data berhasil disimpan ke Supabase")
     except Exception as e:
-        st.write(f"Error saat menyimpan data ke Supabase: {e}")
+        st.error(f"Error saat menyimpan data ke Supabase: {e}")
 
 # Streamlit UI
 st.title("Model Prediksi Level Keahlian")
@@ -435,3 +436,4 @@ if st.button('Prediksi'):
 
     # Save input and prediction to Supabase
     insert_prediction(tuple(data_simpan.values.flatten()))
+
