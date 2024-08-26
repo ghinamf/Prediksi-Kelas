@@ -470,8 +470,8 @@ st_supabase_client = st.connection(
     name="supabase_connection",
     type=SupabaseConnection,
     ttl=None,
-    url="SUPABASE_URL",
-    key="SUPABASE_KEY"
+    # url="SUPABASE_URL",
+    # key="SUPABASE_KEY"
 )
 
 # Load the pkl files
