@@ -269,128 +269,40 @@
 #     insert_prediction(data_simpan.to_dict(orient='records'))
 
 
-# import streamlit as st
-# import pandas as pd
-# import joblib
-# from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
-# from sklearn.ensemble import RandomForestClassifier
-# from st_supabase_connection import SupabaseConnection
-
-# # Load the pkl files
-# scaler = joblib.load('scaler.pkl')
-# le_status = joblib.load('le_status.pkl')
-# #le_lokasi = joblib.load('le_lokasi.pkl')
-# ohe = joblib.load('ohe.pkl')
-# modela = joblib.load('final_model.pkl')
-# feature_order = joblib.load('feature_order.pkl')
-
-# # Initialize Supabase connection
-# # supabase = SupabaseConnection(st.secrets["SUPABASE_URL"], st.secrets["SUPABASE_KEY"])
-# # supabase = SupabaseConnection(
-# #     st.secrets["supabase"]["SUPABASE_URL"],
-# #     st.secrets["supabase"]["SUPABASE_KEY"]
-# # )
-
-# # # Initialize Supabase connection
-# # supabase = SupabaseConnection(connection_name="MySupabaseConnection")
-# # # Later in the code, when using the connection
-# # supabase.connect(st.secrets["supabase"]["SUPABASE_URL"], st.secrets["supabase"]["SUPABASE_KEY"])
-
-# # Initialize Supabase connection with the required parameters
-# supabase = SupabaseConnection(
-#     connection_name="MySupabaseConnection", 
-#     url=st.secrets["supabase"]["SUPABASE_URL"], 
-#     key=st.secrets["supabase"]["SUPABASE_KEY"]
-# )
-
-
-# # Streamlit UI
-# st.title("Model Prediksi Level Keahlian")
-
-# # Input form for new data
-# durations_perproject = st.number_input('Kemampuan Waktu Pengerjaan Tiap Project [hour]')
-# total_project = st.number_input('Kemampuan Menyelesaikan Project [jumlah]')
-# status = st.selectbox('Status Kerja', le_status.classes_)
-# lama_kerja = st.number_input('Lama Kerja [year]')
-# divisi = st.selectbox('Divisi Impian', ohe.categories_[0])
-# gol = st.selectbox('Target Gol', ohe.categories_[1])
-# revisian= st.selectbox('Level Keahlian yang Seharusnya', ['Pelaksana Madya', 'Pelaksana Pemula', 'Pelaksana Utama', 'Perekayasa Madya', 'Perekayasa Magang', 'Perekayasa Muda', 'Perekayasa Utama', 'Pimpinan Madya', 'Pimpinan Muda', 'Pimpinan Pemula', 'Pimpinan Utama' ])
-
-# # Condition for button
-# if st.button('Prediksi'):
-#     # Preprocess the new input data
-#     new_data = pd.DataFrame({
-#         'DURATIONS_PERPROJECT': [durations_perproject],
-#         'TOTAL_PROJECT': [total_project],
-#         'STATUS': [status],
-#         'LAMA_KERJA': [lama_kerja],
-#         'DIVISI': [divisi],
-#         #'LOKASI': [lokasi],
-#         'GOL': [gol]
-#     })
-    
-#     data_simpan= new_data
-    
-#     # Transforming data
-#     new_data['STATUSenc'] = le_status.transform(new_data['STATUS'])
-#     #new_data['LOKASIenc'] = le_lokasi.transform(new_data['LOKASI'])
-#     encoded_features_new = ohe.transform(new_data[['DIVISI', 'GOL']])
-#     encoded_df_new = pd.DataFrame(encoded_features_new, columns=ohe.get_feature_names_out(['DIVISI', 'GOL']))
-#     new_data = pd.concat([new_data, encoded_df_new], axis=1)
-#     new_data[['DURATIONS_PERPROJECT', 'TOTAL_PROJECT', 'LAMA_KERJA']] = scaler.transform(new_data[['DURATIONS_PERPROJECT', 'TOTAL_PROJECT', 'LAMA_KERJA']])
-    
-#     # Unused columns
-#     #X_new = new_data.drop(columns=['STATUS', 'DIVISI', 'GOL'])
-#     # Ensure the input data follows the correct order
-#     X_new = new_data.reindex(columns=feature_order)
-    
-#     # Prediction
-#     prediction = modela.predict(X_new)
-#     st.write(f'Hasil Prediksi: {prediction[0]}')
-    
-#     # Save prediction result with the input data to Supabase
-#     data_simpan['Predicted_Keahlian'] = prediction[0]
-#     data_simpan['Revisian'] = revisian
-    
-#     # # Prepare the data for saving
-#     # data_simpan = {
-#     #     "DURATIONS_PERPROJECT": durations_perproject,
-#     #     "TOTAL_PROJECT": total_project,
-#     #     "STATUS": status,
-#     #     "lAMA KERJA": lama_kerja,
-#     #     "DIVISI": divisi,
-#     #     "GOL": gol,
-#     #     "Predicted_LEVEL_KEAHLIAN": prediction[0],
-#     #     "Revisian_LEVEL_KEAHLIAN": revisian
-#     # }
-    
-    
-    
-#     # Insert the record into Supabase table (e.g., "prediction_history")
-#     try:
-#         supabase.insert("prediction_history", data_simpan.to_dict(orient='records')[0])
-#         st.success("Data has been saved to Supabase.")
-#     except Exception as e:
-#         st.error(f"Error saving data to Supabase: {e}")
-
 import streamlit as st
 import pandas as pd
 import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
-from supabase import create_client, Client
+from st_supabase_connection import SupabaseConnection
 
 # Load the pkl files
 scaler = joblib.load('scaler.pkl')
 le_status = joblib.load('le_status.pkl')
+#le_lokasi = joblib.load('le_lokasi.pkl')
 ohe = joblib.load('ohe.pkl')
 modela = joblib.load('final_model.pkl')
 feature_order = joblib.load('feature_order.pkl')
 
-# Initialize Supabase client
-url: str = st.secrets["supabase"]["SUPABASE_URL"]
-key: str = st.secrets["supabase"]["SUPABASE_KEY"]
-supabase: Client = create_client(url, key)
+# Initialize Supabase connection
+# supabase = SupabaseConnection(st.secrets["SUPABASE_URL"], st.secrets["SUPABASE_KEY"])
+# supabase = SupabaseConnection(
+#     st.secrets["supabase"]["SUPABASE_URL"],
+#     st.secrets["supabase"]["SUPABASE_KEY"]
+# )
+
+# # Initialize Supabase connection
+# supabase = SupabaseConnection(connection_name="MySupabaseConnection")
+# # Later in the code, when using the connection
+# supabase.connect(st.secrets["supabase"]["SUPABASE_URL"], st.secrets["supabase"]["SUPABASE_KEY"])
+
+# Initialize Supabase connection with the required parameters
+supabase = SupabaseConnection(
+    connection_name="MySupabaseConnection", 
+    url=st.secrets["supabase"]["SUPABASE_URL"], 
+    key=st.secrets["supabase"]["SUPABASE_KEY"]
+)
+
 
 # Streamlit UI
 st.title("Model Prediksi Level Keahlian")
@@ -402,7 +314,7 @@ status = st.selectbox('Status Kerja', le_status.classes_)
 lama_kerja = st.number_input('Lama Kerja [year]')
 divisi = st.selectbox('Divisi Impian', ohe.categories_[0])
 gol = st.selectbox('Target Gol', ohe.categories_[1])
-revisian= st.selectbox('Level Keahlian yang Seharusnya', ['Pelaksana Madya', 'Pelaksana Pemula', 'Pelaksana Utama', 'Perekayasa Madya', 'Perekayasa Magang', 'Perekayasa Muda', 'Perekayasa Utama', 'Pimpinan Madya', 'Pimpinan Muda', 'Pimpinan Pemula', 'Pimpinan Utama'])
+revisian= st.selectbox('Level Keahlian yang Seharusnya', ['Pelaksana Madya', 'Pelaksana Pemula', 'Pelaksana Utama', 'Perekayasa Madya', 'Perekayasa Magang', 'Perekayasa Muda', 'Perekayasa Utama', 'Pimpinan Madya', 'Pimpinan Muda', 'Pimpinan Pemula', 'Pimpinan Utama' ])
 
 # Condition for button
 if st.button('Prediksi'):
@@ -413,16 +325,22 @@ if st.button('Prediksi'):
         'STATUS': [status],
         'LAMA_KERJA': [lama_kerja],
         'DIVISI': [divisi],
+        #'LOKASI': [lokasi],
         'GOL': [gol]
     })
     
+    data_simpan= new_data
+    
     # Transforming data
     new_data['STATUSenc'] = le_status.transform(new_data['STATUS'])
+    #new_data['LOKASIenc'] = le_lokasi.transform(new_data['LOKASI'])
     encoded_features_new = ohe.transform(new_data[['DIVISI', 'GOL']])
     encoded_df_new = pd.DataFrame(encoded_features_new, columns=ohe.get_feature_names_out(['DIVISI', 'GOL']))
     new_data = pd.concat([new_data, encoded_df_new], axis=1)
     new_data[['DURATIONS_PERPROJECT', 'TOTAL_PROJECT', 'LAMA_KERJA']] = scaler.transform(new_data[['DURATIONS_PERPROJECT', 'TOTAL_PROJECT', 'LAMA_KERJA']])
     
+    # Unused columns
+    #X_new = new_data.drop(columns=['STATUS', 'DIVISI', 'GOL'])
     # Ensure the input data follows the correct order
     X_new = new_data.reindex(columns=feature_order)
     
@@ -430,22 +348,27 @@ if st.button('Prediksi'):
     prediction = modela.predict(X_new)
     st.write(f'Hasil Prediksi: {prediction[0]}')
     
-    # Prepare the data for saving
-    data_simpan = {
-        "durations_perproject": durations_perproject,
-        "total_project": total_project,
-        "status": status,
-        "lama_kerja": lama_kerja,
-        "divisi": divisi,
-        "gol": gol,
-        "revisian": revisian,
-        "prediction": prediction[0]
-    }
+    # Save prediction result with the input data to Supabase
+    data_simpan['Predicted_Keahlian'] = prediction[0]
+    data_simpan['Revisian'] = revisian
+    
+    # # Prepare the data for saving
+    # data_simpan = {
+    #     "DURATIONS_PERPROJECT": durations_perproject,
+    #     "TOTAL_PROJECT": total_project,
+    #     "STATUS": status,
+    #     "lAMA KERJA": lama_kerja,
+    #     "DIVISI": divisi,
+    #     "GOL": gol,
+    #     "Predicted_LEVEL_KEAHLIAN": prediction[0],
+    #     "Revisian_LEVEL_KEAHLIAN": revisian
+    # }
+    
+    
     
     # Insert the record into Supabase table (e.g., "prediction_history")
     try:
-        response = supabase.table("prediction_history").insert(data_simpan).execute()
+        supabase.insert("prediction_history", data_simpan.to_dict(orient='records')[0])
         st.success("Data has been saved to Supabase.")
     except Exception as e:
         st.error(f"Error saving data to Supabase: {e}")
-
