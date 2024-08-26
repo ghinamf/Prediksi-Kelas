@@ -466,22 +466,14 @@ from sklearn.ensemble import RandomForestClassifier
 from st_supabase_connection import SupabaseConnection
 
 # Inisialisasi Supabase Client
-# st_supabase_client = st.connection(
-#     name="supabase_connection",
-#     type=SupabaseConnection,
-#     ttl=None,
-#     # url="SUPABASE_URL",
-#     # key="SUPABASE_KEY"
-#     url=st.secrets["supabase"]["SUPABASE_URL"],
-#     key=st.secrets["supabase"]["SUPABASE_KEY"]
-# )
-
-st_supabase = st.connection(
-    name="supabase_connection", 
-    type=SupabaseConnection, 
+st_supabase_client = st.connection(
+    name="supabase_connection",
+    type=SupabaseConnection,
     ttl=None,
-    url="url", 
-    key="key", 
+    # url="SUPABASE_URL",
+    # key="SUPABASE_KEY"
+    url=st.secrets["supabase"]["SUPABASE_URL"],
+    key=st.secrets["supabase"]["SUPABASE_KEY"]
 )
 
 # Load the pkl files
