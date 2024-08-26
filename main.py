@@ -338,7 +338,7 @@ if st.button('Prediksi'):
     data_simpan['Revisian_LEVEL_KEAHLIAN'] = revisian
     
     # Convert durations_perproject to a JSON array
-    durations_perproject_array = [durations_perproject]  # Create a list
+    durations_perproject_array = [new_data]  # Create a list
     data_simpan['DURATIONS_PERPROJECT'] = json.dumps(durations_perproject_array)
     
     try:
