@@ -368,7 +368,7 @@ if st.button('Prediksi'):
     
     # Insert the record into Supabase table (e.g., "prediction_history")
     try:
-        supabase.insert("prediction_history", data_simpan.to_dict(orient='records')[0])
+        supabase.table("prediction_history").insert(data_simpan.to_dict(orient='records')[0])
         st.success("Data has been saved to Supabase.")
     except Exception as e:
         st.error(f"Error saving data to Supabase: {e}")
