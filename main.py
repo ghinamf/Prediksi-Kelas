@@ -273,6 +273,7 @@ import pandas as pd
 import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from st_supabase_connection import SupabaseConnection
+import json
 
 # Load the pkl files
 scaler = joblib.load('scaler.pkl')
@@ -335,6 +336,9 @@ if st.button('Prediksi'):
     # Save prediction result with the input data to Supabase
     data_simpan['Predicted_LEVEL_KEAHLIAN'] = prediction[0]
     data_simpan['Revisian_LEVEL_KEAHLIAN'] = revisian
+    
+    # Convert durations_perproject to a JSON array
+    data_simpan['DURATIONS_PERPROJECT'] = json.dumps([durations_perproject])
     
     try:
         insert_result = supabase.table("pre_his").insert(data_simpan.to_dict(orient='records')).execute()
