@@ -349,8 +349,8 @@ if st.button('Prediksi'):
     st.write(f'Hasil Prediksi: {prediction[0]}')
     
     # Save prediction result with the input data to Supabase
-    data_simpan['Predicted_Keahlian'] = prediction[0]
-    data_simpan['Revisian'] = revisian
+    data_simpan['Predicted_LEVEL_KEAHLIAN'] = prediction[0]
+    data_simpan['Revisian_LEVEL_KEAHLIAN'] = revisian
     
     # # Prepare the data for saving
     # data_simpan = {
