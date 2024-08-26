@@ -10,3 +10,4 @@ scipy==1.14.0
 config
 psycopg2-binary
 st-supabase-connection==2.0.0
+jason==0.1.7
